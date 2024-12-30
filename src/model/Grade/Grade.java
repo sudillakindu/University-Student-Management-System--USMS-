@@ -1,4 +1,4 @@
-package model;
+package model.Grade;
 
 public class Grade {
 }
