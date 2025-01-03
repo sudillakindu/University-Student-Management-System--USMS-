@@ -1,4 +1,6 @@
-import view.LoginFormView;
+import controller.LoginAndSignUpController;
+import model.LoginAndSignUpModel;
+import view.LoginAndSignUpFormView;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -7,12 +9,20 @@ import java.awt.event.MouseEvent;
 public class Main {
     public static void main(String[] args) {
 
+        LoginAndSignUpFormView view = new LoginAndSignUpFormView();
+        LoginAndSignUpModel model = new LoginAndSignUpModel();
+        LoginAndSignUpController controller = new LoginAndSignUpController(view,model);
+
         // Create a JFrame to display the UI
         JFrame frame = new JFrame();
         frame.setUndecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        LoginFormView loginFormView = new LoginFormView();
-        frame.setContentPane(loginFormView);
+
+        frame.getContentPane().add(view);
+        frame.pack();
+
+        //frame.setContentPane(loginAndSignUpFormView);
+
         frame.setSize(1024, 768);
         frame.setLocationRelativeTo(null);
         addDragFunctionality(frame);
