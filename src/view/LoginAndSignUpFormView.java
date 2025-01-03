@@ -2,30 +2,42 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class LoginFormView extends JPanel {
+public class LoginAndSignUpFormView extends JPanel {
 
+    private JPanel mainPane;
     private JPanel sidePane;
     private JPanel loginPane;
     private JPanel signUpPane;
     private JPanel groupPane;
 
-    private ImageIcon sidePaneImageIcon, smoothSidePaneImageIcon;
+    private ImageIcon sidePaneExitImageIcon, smoothSidePaneExitImageIcon;
+    private ImageIcon sidePaneCapImageIcon, smoothSidePaneCapImageIcon;
+    private ImageIcon sidePaneMainImageIcon, smoothSidePaneMainImageIcon;
     private ImageIcon loginPaneImageIcon, smoothLoginPaneImageIcon;
     private ImageIcon signUpPaneImageIcon, smoothSignUpPaneImageIcon;
 
-    private Image imgSidePane;
+    private Image exitImgSidePane;
+    private Image capImgSidePane;
+    private Image mainImgSidePane;
     private Image imgLoginPane;
     private Image imgSignUpPane;
 
-    private JLabel sidePaneImage;
+    private JLabel sidePaneExitImage;
+    private JLabel sidePaneCapImage;
+    private JLabel sidePaneMainImage;
     private JLabel loginPaneImageLabel;
     private JLabel signUpPaneImageLabel;
 
-    private JTextField usernameTextField;
-    private JTextField emailTextField;
-    private JTextField passwordTextField;
-    private JPasswordField passwordPasswordField;
+    private JTextField loginUsernameTextField, signUpUsernameTextField;
+    private JTextField signUpEmailTextField;
+    private JTextField signUpPasswordTextField;
+    private JPasswordField loginPasswordField;
+
+    private JComboBox<String> signUpSelectRoleComboBox;
 
     private JButton loginButton;
     private JButton signUpButton;
@@ -36,20 +48,19 @@ public class LoginFormView extends JPanel {
 
     private JLabel mainNoteLabel;
     private JLabel welcomeLabel;
+    private JLabel welcomeNoteLabel;
+    private JLabel selectRoleLabel;
     private JLabel usernameLabel;
     private JLabel emailLabel;
     private JLabel passwordLabel;
-    private JLabel welcomeNoteLabel;
     private JLabel endNoteLabel;
 
-    public LoginFormView() {
+    public LoginAndSignUpFormView() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         setLayout(null);
         setPreferredSize(new Dimension(1024, 768));
         setBackground(Color.WHITE);
-        // Match the JavaFX rounded corners
-        //setBorder(BorderFactory.createLineBorder(Color.GRAY, 2, true));
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Side Pane (Left)
@@ -68,12 +79,42 @@ public class LoginFormView extends JPanel {
         sidePane.add(mainNoteLabel);
 
         // Side Pane Image
-        sidePaneImageIcon = new ImageIcon("resources/images/happy-university.png");
-        imgSidePane = sidePaneImageIcon.getImage().getScaledInstance(622, 616, Image.SCALE_SMOOTH);
-        smoothSidePaneImageIcon = new ImageIcon(imgSidePane);
-        sidePaneImage = new JLabel(smoothSidePaneImageIcon);
-        sidePaneImage.setBounds(-21, 213, 622, 616);
-        sidePane.add(sidePaneImage);
+        sidePaneExitImageIcon = new ImageIcon("resources/images/icons8-exit-50.png");
+        exitImgSidePane = sidePaneExitImageIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        smoothSidePaneExitImageIcon = new ImageIcon(exitImgSidePane);
+        sidePaneExitImage = new JLabel(smoothSidePaneExitImageIcon);
+        sidePaneExitImage.setBounds(10, 10, 25, 25);
+        sidePane.add(sidePaneExitImage);
+
+        // Add click functionality to the exit image
+        sidePaneExitImage.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int confirm = JOptionPane.showConfirmDialog(
+                        signUpPane,
+                        "Are you sure you want to exit?",
+                        "Exit Confirmation",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (confirm == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
+//        sidePaneCapImageIcon = new ImageIcon("resources/images/icons8-university-100.png");
+//        capImgSidePane = sidePaneCapImageIcon.getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
+//        smoothSidePaneCapImageIcon = new ImageIcon(capImgSidePane);
+//        sidePaneCapImage = new JLabel(smoothSidePaneCapImageIcon);
+//        sidePaneCapImage.setBounds(60, 60, 55, 55);
+//        sidePane.add(sidePaneCapImage);
+
+        sidePaneMainImageIcon = new ImageIcon("resources/images/happy-university.png");
+        mainImgSidePane = sidePaneMainImageIcon.getImage().getScaledInstance(622, 616, Image.SCALE_SMOOTH);
+        smoothSidePaneMainImageIcon = new ImageIcon(mainImgSidePane);
+        sidePaneMainImage = new JLabel(smoothSidePaneMainImageIcon);
+        sidePaneMainImage.setBounds(-21, 213, 622, 616);
+        sidePane.add(sidePaneMainImage);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Login Pane (Right)
@@ -95,14 +136,12 @@ public class LoginFormView extends JPanel {
         welcomeLabel = new JLabel("Welcome back");
         welcomeLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 35));
         welcomeLabel.setBounds(113, 279, 250, 42);
-        //welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         loginPane.add(welcomeLabel);
 
         // Welcome to Note Label
         welcomeNoteLabel = new JLabel("Please enter your details");
         welcomeNoteLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         welcomeNoteLabel.setBounds(113, 325, 249, 25);
-        //welcomeNoteLabel.setHorizontalAlignment(SwingConstants.CENTER);
         loginPane.add(welcomeNoteLabel);
 
         // Username Label
@@ -112,15 +151,15 @@ public class LoginFormView extends JPanel {
         loginPane.add(usernameLabel);
 
         // Username TextField with custom styling
-        usernameTextField = new JTextField();
-        usernameTextField.setBounds(113, 399, 249, 30);
-        usernameTextField.setBackground(new Color(255, 255, 255));
-        usernameTextField.setFont(new Font("Arial", Font.PLAIN, 14));
-        usernameTextField.setBorder(BorderFactory.createCompoundBorder(
+        loginUsernameTextField = new JTextField();
+        loginUsernameTextField.setBounds(113, 399, 249, 30);
+        loginUsernameTextField.setBackground(new Color(255, 255, 255));
+        loginUsernameTextField.setFont(new Font("Arial", Font.PLAIN, 14));
+        loginUsernameTextField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(141, 11, 65), 2),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        loginPane.add(usernameTextField);
+        loginPane.add(loginUsernameTextField);
 
         // Password Label
         passwordLabel = new JLabel("Password");
@@ -129,15 +168,15 @@ public class LoginFormView extends JPanel {
         loginPane.add(passwordLabel);
 
         // Password TextField with custom styling
-        passwordPasswordField = new JPasswordField();
-        passwordPasswordField.setBounds(113, 474, 249, 30);
-        passwordPasswordField.setBackground(new Color(255, 255, 255));
-        passwordPasswordField.setFont(new Font("Arial", Font.PLAIN, 14));
-        passwordPasswordField.setBorder(BorderFactory.createCompoundBorder(
+        loginPasswordField = new JPasswordField();
+        loginPasswordField.setBounds(113, 474, 249, 30);
+        loginPasswordField.setBackground(new Color(255, 255, 255));
+        loginPasswordField.setFont(new Font("Arial", Font.PLAIN, 14));
+        loginPasswordField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(141, 11, 65), 2),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        loginPane.add(passwordPasswordField);
+        loginPane.add(loginPasswordField);
 
         // Show Password Button
         showPasswordButton = new JButton("show");
@@ -152,11 +191,11 @@ public class LoginFormView extends JPanel {
 
         // Add show/hide password functionality
         showPasswordButton.addActionListener(e -> {
-            if (passwordPasswordField.getEchoChar() == 0) {
-                passwordPasswordField.setEchoChar('•');
+            if (loginPasswordField.getEchoChar() == 0) {
+                loginPasswordField.setEchoChar('•');
                 showPasswordButton.setText("show");
             } else {
-                passwordPasswordField.setEchoChar((char) 0);
+                loginPasswordField.setEchoChar((char) 0);
                 showPasswordButton.setText("hide");
             }
         });
@@ -171,11 +210,6 @@ public class LoginFormView extends JPanel {
         forgotPasswordButton.setFocusPainted(false);
         forgotPasswordButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         loginPane.add(forgotPasswordButton);
-
-        // Forgot Password Button functionality
-        forgotPasswordButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "forgotPasswordButton", "Success", JOptionPane.INFORMATION_MESSAGE);
-        });
 
         // Login Button with gradient-like effect
         loginButton = new JButton("Log in") {
@@ -199,11 +233,6 @@ public class LoginFormView extends JPanel {
         loginButton.setFocusPainted(false);
         loginButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         loginPane.add(loginButton);
-
-        // Login Button functionality
-        loginButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "loginButton", "Success", JOptionPane.INFORMATION_MESSAGE);
-        });
 
         // End Note Label and Create Account Button Group
         JPanel groupPanel = new JPanel();
@@ -251,72 +280,91 @@ public class LoginFormView extends JPanel {
         imgSignUpPane = signUpPaneImageIcon.getImage().getScaledInstance(257, 171, Image.SCALE_SMOOTH);
         smoothSignUpPaneImageIcon = new ImageIcon(imgSignUpPane);
         signUpPaneImageLabel = new JLabel(smoothSignUpPaneImageIcon);
-        signUpPaneImageLabel.setBounds(119, 72, 257, 171);
+        signUpPaneImageLabel.setBounds(119, 46, 257, 171);
         signUpPane.add(signUpPaneImageLabel);
 
         // Welcome message in Sign Up Pane
         welcomeLabel = new JLabel("Create an account", JLabel.CENTER);
         welcomeLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 35));
-        welcomeLabel.setBounds(80, 243, 314, 42);
+        welcomeLabel.setBounds(80, 217, 314, 42);
         signUpPane.add(welcomeLabel);
 
         // Welcome to Note Label
         welcomeNoteLabel = new JLabel("Your service is necessary for us!");
         welcomeNoteLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        welcomeNoteLabel.setBounds(80, 292, 197, 18);
-        //welcomeNoteLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        welcomeNoteLabel.setBounds(80, 266, 197, 18);
         signUpPane.add(welcomeNoteLabel);
+
+        // Select Role Label label
+        selectRoleLabel = new JLabel("Select Role");
+        selectRoleLabel.setFont(new Font("Times New Roman", Font.BOLD, 17));
+        selectRoleLabel.setBounds(80, 306, 249, 20);
+        signUpPane.add(selectRoleLabel);
+
+        // Create a JComboBox
+        signUpSelectRoleComboBox = new JComboBox<>();
+        signUpSelectRoleComboBox.setBounds(80, 334, 249, 35); // Set position and size
+        signUpSelectRoleComboBox.setBackground(new Color(255, 255, 255)); // Background color
+        //signUpSelectRoleComboBox.setForeground(new Color(51, 51, 51)); // Text color
+        signUpSelectRoleComboBox.setFont(new Font("Arial", Font.PLAIN, 14)); // Font size
+        signUpSelectRoleComboBox.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(141, 11, 65), 2), // Outer border
+                BorderFactory.createEmptyBorder(0, 0, 0, 0) // Padding
+        ));
+        signUpSelectRoleComboBox.addItem("admin");
+        signUpSelectRoleComboBox.addItem("user");
+        signUpPane.add(signUpSelectRoleComboBox);
 
         // Username field and label
         usernameLabel = new JLabel("Username");
         usernameLabel.setFont(new Font("Times New Roman", Font.BOLD, 17));
-        usernameLabel.setBounds(80, 330, 249, 20);
+        usernameLabel.setBounds(80, 382, 249, 20);
         signUpPane.add(usernameLabel);
 
         // Username TextField with custom styling
-        usernameTextField = new JTextField();
-        usernameTextField.setBounds(80, 356, 249, 30);
-        usernameTextField.setBackground(new Color(255, 255, 255));
-        usernameTextField.setFont(new Font("Arial", Font.PLAIN, 14));
-        usernameTextField.setBorder(BorderFactory.createCompoundBorder(
+        signUpUsernameTextField = new JTextField();
+        signUpUsernameTextField.setBounds(80, 410, 249, 35);
+        signUpUsernameTextField.setBackground(new Color(255, 255, 255));
+        signUpUsernameTextField.setFont(new Font("Arial", Font.PLAIN, 14));
+        signUpUsernameTextField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(141, 11, 65), 2),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        signUpPane.add(usernameTextField);
+        signUpPane.add(signUpUsernameTextField);
 
         // Email field and label
         emailLabel = new JLabel("Email");
         emailLabel.setFont(new Font("Times New Roman", Font.BOLD, 17));
-        emailLabel.setBounds(80, 406, 249, 20);
+        emailLabel.setBounds(80, 458, 249, 20);
         signUpPane.add(emailLabel);
 
         // Email TextField with custom styling
-        emailTextField = new JTextField();
-        emailTextField.setBounds(80, 432, 249, 30);
-        emailTextField.setBackground(new Color(255, 255, 255));
-        emailTextField.setFont(new Font("Arial", Font.PLAIN, 14));
-        emailTextField.setBorder(BorderFactory.createCompoundBorder(
+        signUpEmailTextField = new JTextField();
+        signUpEmailTextField.setBounds(80, 486, 249, 35);
+        signUpEmailTextField.setBackground(new Color(255, 255, 255));
+        signUpEmailTextField.setFont(new Font("Arial", Font.PLAIN, 14));
+        signUpEmailTextField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(141, 11, 65), 2),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        signUpPane.add(emailTextField);
+        signUpPane.add(signUpEmailTextField);
 
         // Password field and label
         passwordLabel = new JLabel("Password");
         passwordLabel.setFont(new Font("Times New Roman", Font.BOLD, 17));
-        passwordLabel.setBounds(80, 482, 249, 20);
+        passwordLabel.setBounds(80, 534, 249, 20);
         signUpPane.add(passwordLabel);
 
         // Password TextField with custom styling
-        passwordTextField = new JTextField();
-        passwordTextField.setBounds(80, 508, 249, 30);
-        passwordTextField.setBackground(new Color(255, 255, 255));
-        passwordTextField.setFont(new Font("Arial", Font.PLAIN, 14));
-        passwordTextField.setBorder(BorderFactory.createCompoundBorder(
+        signUpPasswordTextField = new JTextField();
+        signUpPasswordTextField.setBounds(80, 562, 249, 35);
+        signUpPasswordTextField.setBackground(new Color(255, 255, 255));
+        signUpPasswordTextField.setFont(new Font("Arial", Font.PLAIN, 14));
+        signUpPasswordTextField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(141, 11, 65), 2),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        signUpPane.add(passwordTextField);
+        signUpPane.add(signUpPasswordTextField);
 
         // Sign up button with gradient-like effect
         signUpButton = new JButton("Sign Up") {
@@ -334,22 +382,17 @@ public class LoginFormView extends JPanel {
         };
         signUpButton.setFont(new Font("Arial", Font.BOLD, 15));
         signUpButton.setForeground(Color.WHITE);
-        signUpButton.setBounds(80, 577, 314, 40);
+        signUpButton.setBounds(80, 620, 314, 40);
         signUpButton.setContentAreaFilled(false);
         signUpButton.setBorderPainted(false);
         signUpButton.setFocusPainted(false);
         signUpButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         signUpPane.add(signUpButton);
 
-        // Sign up button functionality
-        signUpButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "signUpButton", "Success", JOptionPane.INFORMATION_MESSAGE);
-        });
-
         // End Note Label and New Login Button Group
         groupPane = new JPanel();
         groupPane.setLayout(null);
-        groupPane.setBounds(118, 638, 249, 32);
+        groupPane.setBounds(118, 675, 249, 32);
         groupPane.setBackground(Color.WHITE);
 
         // End Note Label
@@ -373,9 +416,48 @@ public class LoginFormView extends JPanel {
         newLoginButton.addActionListener(e -> {
             signUpPane.setVisible(false);
             loginPane.setVisible(true);
-            //JOptionPane.showMessageDialog(null, "newLoginButton", "Success", JOptionPane.INFORMATION_MESSAGE);
         });
 
         signUpPane.add(groupPane);
     }
+
+
+    public String getLoginUsername() {
+        return loginUsernameTextField.getText();
+    }
+    public String getLoginPassword() {
+        return new String(loginPasswordField.getPassword());
+    }
+    public void addForgotPasswordButtonListener(ActionListener listener) {
+        forgotPasswordButton.addActionListener(listener);
+    }
+    public void addLoginButtonListener(ActionListener listener) {
+        loginButton.addActionListener(listener);
+    }
+
+
+    public String getSignUpSelectRoleComboBox() {
+        return (String) signUpSelectRoleComboBox.getSelectedItem();
+    }
+    public String getSignUpUsername() {
+        return signUpUsernameTextField.getText();
+    }
+    public String getSignUpEmail() {
+        return signUpEmailTextField.getText();
+    }
+    public String getSignUpPassword() {
+        return signUpPasswordTextField.getText();
+    }
+    public void addSignUpButtonListener(ActionListener listener) {
+        signUpButton.addActionListener(listener);
+    }
+
+
+    public JPanel getLoginPane() {
+        return loginPane;
+    }
+    public JPanel getSignUpPane() {
+        return signUpPane;
+    }
+
 }
