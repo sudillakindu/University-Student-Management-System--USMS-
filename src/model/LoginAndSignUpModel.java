@@ -16,7 +16,7 @@ public class LoginAndSignUpModel {
             if (userRs.next()) {
                 String storedHashedPassword = userRs.getString("password");
                 if (Objects.equals(storedHashedPassword, hashPassword(password))) {
-                    return "Regular User Login Successful!" + "\n" + "Hi, " + username + "!";
+                    return "return1";
                 }
             }
 
@@ -28,14 +28,14 @@ public class LoginAndSignUpModel {
             if (adminRs.next()) {
                 String storedHashedPassword = adminRs.getString("password");
                 if (Objects.equals(storedHashedPassword, hashPassword(password))) {
-                    return "Admin Login Successful!" + "\n" + "Hi, " + username + "!";
+                    return "return2";
                 }
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "Invalid username or password!";
+        return "return3";
     }
 
     public String validateSignUp(String role, String username, String email, String password) {
@@ -49,7 +49,7 @@ public class LoginAndSignUpModel {
             ResultSet rs = checkUserStmt.executeQuery();
 
             if (rs.next()) {
-                return "User already exists!";
+                return "return4";
             }
 
             // Hash the password for security
@@ -64,14 +64,14 @@ public class LoginAndSignUpModel {
 
             int rowsInserted = insertUserStmt.executeUpdate();
             if (rowsInserted > 0) {
-                return "User successfully registered!";
+                return "return5";
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
             return "Database error occurred!" + "\n" + e.getMessage();
         }
-        return "Registration failed!";
+        return "return6";
     }
 
     // Helper method to hash the password (you can use libraries like BCrypt for better security)

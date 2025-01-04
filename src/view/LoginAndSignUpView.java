@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class LoginAndSignUpFormView extends JPanel {
+public class LoginAndSignUpView extends JPanel {
+
+    private JFrame loginAndSignUpViewFrame;
 
     private JPanel mainPane;
     private JPanel sidePane;
@@ -55,12 +57,16 @@ public class LoginAndSignUpFormView extends JPanel {
     private JLabel passwordLabel;
     private JLabel endNoteLabel;
 
-    public LoginAndSignUpFormView() {
+    public LoginAndSignUpView() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        setLayout(null);
-        setPreferredSize(new Dimension(1024, 768));
-        setBackground(Color.WHITE);
+        loginAndSignUpViewFrame = new JFrame();
+        loginAndSignUpViewFrame.setUndecorated(true);
+        loginAndSignUpViewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        loginAndSignUpViewFrame.setSize(1024, 768);
+        loginAndSignUpViewFrame.setLayout(null);
+        loginAndSignUpViewFrame.setBackground(Color.WHITE);
+        addDragFunctionality(loginAndSignUpViewFrame);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Side Pane (Left)
@@ -68,7 +74,7 @@ public class LoginAndSignUpFormView extends JPanel {
         sidePane.setLayout(null);
         sidePane.setBackground(new Color(141, 11, 65)); // #8D0B41
         sidePane.setBounds(0, 0, 550, 768);
-        add(sidePane);
+        loginAndSignUpViewFrame.add(sidePane);
 
         // Main Note Label
         mainNoteLabel = new JLabel("<html><center>University Student<br>Management System</center></html>");
@@ -91,7 +97,7 @@ public class LoginAndSignUpFormView extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int confirm = JOptionPane.showConfirmDialog(
-                        signUpPane,
+                        loginAndSignUpViewFrame,
                         "Are you sure you want to exit?",
                         "Exit Confirmation",
                         JOptionPane.YES_NO_OPTION
@@ -122,7 +128,7 @@ public class LoginAndSignUpFormView extends JPanel {
         loginPane.setLayout(null);
         loginPane.setBackground(Color.WHITE);
         loginPane.setBounds(550, 0, 474, 768);
-        add(loginPane);
+        loginAndSignUpViewFrame.add(loginPane);
 
         // Login Pane Image
         loginPaneImageIcon = new ImageIcon("resources/images/login-access-vector.png");
@@ -271,7 +277,7 @@ public class LoginAndSignUpFormView extends JPanel {
         signUpPane.setLayout(null);
         signUpPane.setBackground(Color.WHITE);
         signUpPane.setBounds(550, 0, 474, 768);
-        add(signUpPane);
+        loginAndSignUpViewFrame.add(signUpPane);
 
         signUpPane.setVisible(false);
 
@@ -419,8 +425,10 @@ public class LoginAndSignUpFormView extends JPanel {
         });
 
         signUpPane.add(groupPane);
-    }
 
+        loginAndSignUpViewFrame.setLocationRelativeTo(null);
+        loginAndSignUpViewFrame.setVisible(true);
+    }
 
     public String getLoginUsername() {
         return loginUsernameTextField.getText();
@@ -434,7 +442,6 @@ public class LoginAndSignUpFormView extends JPanel {
     public void addLoginButtonListener(ActionListener listener) {
         loginButton.addActionListener(listener);
     }
-
 
     public String getSignUpSelectRoleComboBox() {
         return (String) signUpSelectRoleComboBox.getSelectedItem();
@@ -452,12 +459,38 @@ public class LoginAndSignUpFormView extends JPanel {
         signUpButton.addActionListener(listener);
     }
 
-
     public JPanel getLoginPane() {
         return loginPane;
     }
     public JPanel getSignUpPane() {
         return signUpPane;
+    }
+    public JFrame getLoginAndSignUpViewFrame() {
+        return loginAndSignUpViewFrame;
+    }
+
+    // Method to add drag functionality
+    public static void addDragFunctionality(JFrame frame) {
+        final int[] mousePosition = {0, 0};
+
+        // Add mouse listener to capture the click position
+        frame.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mousePosition[0] = e.getX();
+                mousePosition[1] = e.getY();
+            }
+        });
+
+        // Add mouse motion listener to move the frame
+        frame.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                int x = e.getXOnScreen() - mousePosition[0];
+                int y = e.getYOnScreen() - mousePosition[1];
+                frame.setLocation(x, y);
+            }
+        });
     }
 
 }
