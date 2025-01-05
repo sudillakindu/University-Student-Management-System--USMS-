@@ -1,8 +1,7 @@
 package controller;
 
 import model.LoginAndSignUpModel;
-import view.LoginAndSignUpView;
-import view.MainView;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,37 +35,59 @@ public class MainController {
 
     class DashboardButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            showInfoMessage(mainView.getMainViewPane(), "Dashboard\nThis section is not currently functioning.");
+            DashboardView dashboardView = new DashboardView();
+            DashboardController dashboardController = new DashboardController(dashboardView);
+            addItemToMainViewPane(dashboardView.getDashboardViewPanel());
+
+            //showInfoMessage(mainView.getMainViewPane(), "Dashboard\nThis section is not currently functioning.");
         }
     }
     class RegistrationButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            showInfoMessage(mainView.getMainViewPane(), "Registration\nThis section is not currently functioning.");
+            RegistrationView registrationView = new RegistrationView();
+            addItemToMainViewPane(registrationView.getRegistrationViewPanel());
+
+            //showInfoMessage(mainView.getMainViewPane(), "Registration\nThis section is not currently functioning.");
         }
     }
     class CourseButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            CourseView courseView = new CourseView();
+            addItemToMainViewPane(courseView.getCourseViewPanel());
+
             showInfoMessage(mainView.getMainViewPane(), "Course\nThis section is not currently functioning.");
         }
     }
     class EnrollmentButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            showInfoMessage(mainView.getMainViewPane(), "Enrollment\nThis section is not currently functioning.");
+            EnrollmentView enrollmentView = new EnrollmentView();
+            addItemToMainViewPane(enrollmentView.getEnrollmentViewPanel());
+
+            //showInfoMessage(mainView.getMainViewPane(), "Enrollment\nThis section is not currently functioning.");
         }
     }
     class AttendanceButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            showInfoMessage(mainView.getMainViewPane(), "Attendance\nThis section is not currently functioning.");
+            AttendanceView attendanceView = new AttendanceView();
+            addItemToMainViewPane(attendanceView.getAttendanceViewPanel());
+
+            //showInfoMessage(mainView.getMainViewPane(), "Attendance\nThis section is not currently functioning.");
         }
     }
     class GradeButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            GradeView gradeView = new GradeView();
+            addItemToMainViewPane(gradeView.getGradeViewPanel());
+
             showInfoMessage(mainView.getMainViewPane(), "Grade\nThis section is not currently functioning.");
         }
     }
     class ReportButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            showInfoMessage(mainView.getMainViewPane(), "Report\nThis section is not currently functioning.");
+            RegistrationView registrationView = new RegistrationView();
+            addItemToMainViewPane(registrationView.getRegistrationViewPanel());
+
+            //showInfoMessage(mainView.getMainViewPane(), "Report\nThis section is not currently functioning.");
         }
     }
     class LogOutButtonListener implements ActionListener {
@@ -88,6 +109,16 @@ public class MainController {
         LoginAndSignUpModel loginAndSignUpModel = new LoginAndSignUpModel();
         LoginAndSignUpController loginAndSignUpController = new LoginAndSignUpController(loginAndSignUpView, loginAndSignUpModel);
         mainView.getMainViewFrame().dispose();
+    }
+
+    private void addItemToMainViewPane(Component component) {
+        mainView.getMainViewPane().removeAll();
+        mainView.getMainViewPane().add(component);
+        mainView.getMainViewPane().setLayout(null);
+        mainView.getMainViewPane().revalidate();
+        mainView.getMainViewPane().repaint();
+//        mainView.getMainViewFrame().revalidate();
+//        mainView.getMainViewFrame().repaint();
     }
 
 }
