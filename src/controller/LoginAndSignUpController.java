@@ -78,9 +78,9 @@ public class LoginAndSignUpController {
     }
 
     private void showMainViewFrame(String username) {
+        loginAndSignUpView.getLoginAndSignUpViewFrame().dispose();
         MainView mainView = new MainView(username);
         MainController mainController = new MainController(mainView);
-        loginAndSignUpView.getLoginAndSignUpViewFrame().dispose();
     }
 
     class SignUpButtonListener implements ActionListener {
