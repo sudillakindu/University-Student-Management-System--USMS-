@@ -8,7 +8,7 @@ CREATE TABLE students (
                           name                VARCHAR(100)    NOT NULL,
                           dob                 DATE            NOT NULL,
                           address             VARCHAR(255)    NOT NULL,
-                          contactNumber       VARCHAR(15)     NOT NULL,
+                          contactNumber       VARCHAR(10)     NOT NULL,
                           enrollmentYear      YEAR            NOT NULL
 );
 

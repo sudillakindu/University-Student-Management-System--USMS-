@@ -1,11 +1,13 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class CourseView {
 
     private JPanel courseViewPanel;
+    private JTable table;
 
     public CourseView() {
 
@@ -26,9 +28,19 @@ public class CourseView {
         Label2.setFont(new Font("System", Font.PLAIN, 15));
         Label2.setBounds(25, 60, 400, 20);
         courseViewPanel.add(Label2);
+
+        // Table
+        String[] columnNames = {"Course ID", "Course Name", "Credits", "Duration", "Faculty"};
+        table = new JTable(new DefaultTableModel(columnNames, 0));
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(25, 115, 721, 608);
+        courseViewPanel.add(scrollPane);
     }
 
     public JPanel getCourseViewPanel() {
         return courseViewPanel;
+    }
+    public JTable getTable() {
+        return table;
     }
 }
