@@ -127,12 +127,10 @@ public class AttendanceView {
     public JPanel getAttendanceViewPanel() {
         return attendanceViewPanel;
     }
+
     public JTable getTable() {
         return table;
     }
-//    public boolean getAttendanceDeleteButton(String visible) {
-//        buttons[1].disable();
-//    }
 
     public void addInsertListener(ActionListener listener) {
         buttons[0].addActionListener(listener);
