@@ -26,5 +26,19 @@ public class ReportController {
         }
         return dataSource;
     }
+
+    public List<Map<String, ?>> getAttendanceSpecifySummaryReport(String studentId) {
+        List<Map<String, ?>> dataSource = new ArrayList<>();
+        for (ReportModel.AttendanceRecord record : reportModel.findAttendanceSpecifyRecords(studentId)) {
+            Map<String, Object> m = new HashMap<>();
+            m.put("studentID", record.getStudentID());
+            m.put("studentName", record.getStudentName());
+            m.put("attendanceDate", record.getAttendanceDate());
+            m.put("status", record.getStatus());
+            dataSource.add(m);
+        }
+        return dataSource;
+    }
+
 }
 

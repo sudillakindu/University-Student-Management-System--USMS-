@@ -1,9 +1,6 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +44,48 @@ public class ReportModel {
         return records;
     }
 
+    public List<AttendanceRecord> findAttendanceSpecifyRecords(String studentId) {
+        List<AttendanceRecord> records = new ArrayList<>();
+        Connection connection = DatabaseConnection.getConnection();
+        if (connection != null) {
+            try {
+                // Updated query to filter by the specific student ID
+                String query = "SELECT a.studentID, s.name AS studentName, a.date AS attendanceDate, a.status " +
+                        "FROM attendance a " +
+                        "JOIN students s ON a.studentID = s.studentID " +
+                        "WHERE a.studentID = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, studentId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    String studentID = resultSet.getString("studentID");
+                    String studentName = resultSet.getString("studentName");
+                    String attendanceDate = resultSet.getString("attendanceDate");
+                    String status = resultSet.getString("status");
+
+                    AttendanceRecord record = new AttendanceRecord(studentID, studentName, attendanceDate, status);
+                    records.add(record);
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Error fetching attendance records from the database.");
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (connection != null) {
+                        connection.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            System.out.println("Database connection is null.");
+        }
+
+        return records;
+    }
 
     public static class AttendanceRecord {
         private String studentID;

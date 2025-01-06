@@ -7,14 +7,8 @@ import view.MainView;
 
 public class Main {
     public static void main(String[] args) {
-//        LoginAndSignUpView loginAndSignUpView = new LoginAndSignUpView();
-//        LoginAndSignUpModel loginAndSignUpModel = new LoginAndSignUpModel();
-//        LoginAndSignUpController loginAndSignUpController = new LoginAndSignUpController(loginAndSignUpView, loginAndSignUpModel);
-
-        MainView mainView = new MainView("Test");
-        MainController mainController = new MainController(mainView);
-
-        //DashboardView dashboardView = new DashboardView();
-
+        LoginAndSignUpView loginAndSignUpView = new LoginAndSignUpView();
+        LoginAndSignUpModel loginAndSignUpModel = new LoginAndSignUpModel();
+        LoginAndSignUpController loginAndSignUpController = new LoginAndSignUpController(loginAndSignUpView, loginAndSignUpModel);
     }
 }

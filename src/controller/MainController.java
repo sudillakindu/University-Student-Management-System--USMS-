@@ -93,12 +93,14 @@ public class MainController {
     }
     class ReportButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            ReportView reportView = new ReportView();
-            ReportModel reportModel = new ReportModel();
-            ReportController reportController = new ReportController();
-            addItemToMainViewPane(reportView.getReportViewPanel());
-
-            //showInfoMessage(mainView.getMainViewPane(), "Report\nThis section is not currently functioning.");
+            if (LoginAndSignUpModel.UserSession.isAdmin()) { // Check if the user is an admin
+                ReportView reportView = new ReportView();
+                ReportModel reportModel = new ReportModel();
+                ReportController reportController = new ReportController();
+                addItemToMainViewPane(reportView.getReportViewPanel());
+            } else {
+                showInfoMessage(mainView.getMainViewPane(), "Only admins can access the Report section.");
+            }
         }
     }
     class LogOutButtonListener implements ActionListener {

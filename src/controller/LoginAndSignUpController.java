@@ -13,6 +13,8 @@ public class LoginAndSignUpController {
 
     private LoginAndSignUpView loginAndSignUpView;
     private LoginAndSignUpModel loginAndSignUpModel;
+    // Store the role of the logged-in user
+    private String userRole; // Can be "admin" or "user"
 
     public LoginAndSignUpController(LoginAndSignUpView loginAndSignUpView, LoginAndSignUpModel loginAndSignUpModel) {
         this.loginAndSignUpView = loginAndSignUpView;
@@ -58,10 +60,12 @@ public class LoginAndSignUpController {
             String result = loginAndSignUpModel.validateLogin(username, password);
             switch (result) {
                 case "return1":
+                    LoginAndSignUpModel.UserSession.setSession(username, "user"); // Set session as user
                     showInfoMessage(loginAndSignUpView.getLoginPane(), "Regular User Login Successful!" + "\nHi, " + username + "!");
                     showMainViewFrame(username);
                     break;
                 case "return2":
+                    LoginAndSignUpModel.UserSession.setSession(username, "admin"); // Set session as admin
                     showInfoMessage(loginAndSignUpView.getLoginPane(), "Admin Login Successful!" + "\nHi, " + username + "!");
                     showMainViewFrame(username);
                     break;
@@ -76,6 +80,14 @@ public class LoginAndSignUpController {
             //System.err.println(result);
         }
     }
+
+//    public boolean isAdmin() {
+//        return "admin".equalsIgnoreCase(userRole); // Check if the role is "admin"
+//    }
+//
+//    public boolean isUser() {
+//        return "user".equalsIgnoreCase(userRole); // Check if the role is "user"
+//    }
 
     private void showMainViewFrame(String username) {
         loginAndSignUpView.getLoginAndSignUpViewFrame().dispose();

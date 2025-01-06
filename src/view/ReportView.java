@@ -102,7 +102,7 @@ public class ReportView extends JFrame {
         reportButton2.setFocusPainted(false);
         whitePanel2.add(reportButton2);
 
-        reportButton2.addActionListener(e -> showReport());
+        reportButton2.addActionListener(e -> showSpecifyReport(studentIdTextField.getText()));
 
     }
 
@@ -123,6 +123,34 @@ public class ReportView extends JFrame {
 
             // Load and display the report
             JRDataSource jrDataSource = new JRMapCollectionDataSource(reportController.getAttendanceSummaryReport());
+            JasperPrint jasperPrint = JasperFillManager.fillReport(compiledFile, null, jrDataSource);
+
+            // View the report
+            JasperViewer.viewReport(jasperPrint, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void showSpecifyReport(String studentId) {
+        try {
+            // Adjust the file path as needed
+            String sourceFile = "resources/reports/AttendanceSpecifySummaryReport.jrxml";
+            String compiledFile = "resources/reports/AttendanceSpecifySummaryReport.jasper";
+
+            // Ensure the source file exists
+            File file = new File(sourceFile);
+            if (!file.exists()) {
+                throw new FileNotFoundException("File not found: " + file.getAbsolutePath());
+            }
+
+            // Compile the JRXML file to Jasper
+            JasperCompileManager.compileReportToFile(sourceFile, compiledFile);
+
+            // Load and display the report
+            JRDataSource jrDataSource = new JRMapCollectionDataSource(reportController.getAttendanceSpecifySummaryReport(studentId));
             JasperPrint jasperPrint = JasperFillManager.fillReport(compiledFile, null, jrDataSource);
 
             // View the report

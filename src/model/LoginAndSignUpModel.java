@@ -78,4 +78,37 @@ public class LoginAndSignUpModel {
     private String hashPassword(String password) {
         return Integer.toHexString(password.hashCode());
     }
+
+    public static class UserSession {
+        private static String username;
+        private static String role; // "admin" or "user"
+
+        public static void setSession(String username, String role) {
+            UserSession.username = username;
+            UserSession.role = role;
+        }
+
+        public static String getUsername() {
+            return username;
+        }
+
+        public static String getRole() {
+            return role;
+        }
+
+        public static boolean isAdmin() {
+            return "admin".equalsIgnoreCase(role);
+        }
+
+        public static boolean isUser() {
+            return "user".equalsIgnoreCase(role);
+        }
+
+        public static void clearSession() {
+            username = null;
+            role = null;
+        }
+    }
+
+
 }
