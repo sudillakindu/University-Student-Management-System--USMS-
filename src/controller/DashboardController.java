@@ -12,9 +12,9 @@ public class DashboardController {
     private DashboardView view;
     private DashboardModel model;
 
-    public DashboardController(DashboardView view) {
+    public DashboardController(DashboardView view, DashboardModel model) {
         this.view = view;
-        this.model = new DashboardModel();
+        this.model = model;
 
         update_TotalStudents_TotalCourses_TotalEnrollments();
         updateChart();
@@ -22,7 +22,7 @@ public class DashboardController {
 
     // Method to update the chart with enrollment data
     public void updateChart() {
-        List<DashboardModel.EnrollmentDate> enrollmentDates = model.getEnrollmentDate();
+        List<DashboardModel.EnrollmentDate> enrollmentDates = DashboardModel.getEnrollmentDate();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         // Add data to the dataset

@@ -1,6 +1,6 @@
 package controller;
 
-import model.LoginAndSignUpModel;
+import model.*;
 import view.*;
 
 import javax.swing.*;
@@ -36,7 +36,8 @@ public class MainController {
     class DashboardButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             DashboardView dashboardView = new DashboardView();
-            DashboardController dashboardController = new DashboardController(dashboardView);
+            DashboardModel dashboardModel = new DashboardModel();
+            DashboardController dashboardController = new DashboardController(dashboardView,dashboardModel);
             addItemToMainViewPane(dashboardView.getDashboardViewPanel());
 
             //showInfoMessage(mainView.getMainViewPane(), "Dashboard\nThis section is not currently functioning.");
@@ -45,6 +46,8 @@ public class MainController {
     class RegistrationButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             RegistrationView registrationView = new RegistrationView();
+            RegistrationModel registrationModel = new RegistrationModel();
+            RegistrationController registrationController = new RegistrationController(registrationView,registrationModel);
             addItemToMainViewPane(registrationView.getRegistrationViewPanel());
 
             //showInfoMessage(mainView.getMainViewPane(), "Registration\nThis section is not currently functioning.");
@@ -53,6 +56,8 @@ public class MainController {
     class CourseButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             CourseView courseView = new CourseView();
+            CourseModel courseModel = new CourseModel();
+            CourseController courseController = new CourseController(courseView,courseModel);
             addItemToMainViewPane(courseView.getCourseViewPanel());
 
             showInfoMessage(mainView.getMainViewPane(), "Course\nThis section is not currently functioning.");
@@ -61,6 +66,8 @@ public class MainController {
     class EnrollmentButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             EnrollmentView enrollmentView = new EnrollmentView();
+            EnrollmentModel enrollmentModel = new EnrollmentModel();
+            EnrollmentController enrollmentController = new EnrollmentController(enrollmentView,enrollmentModel);
             addItemToMainViewPane(enrollmentView.getEnrollmentViewPanel());
 
             //showInfoMessage(mainView.getMainViewPane(), "Enrollment\nThis section is not currently functioning.");
@@ -69,6 +76,8 @@ public class MainController {
     class AttendanceButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             AttendanceView attendanceView = new AttendanceView();
+            AttendanceModel attendanceModel = new AttendanceModel();
+            AttendanceController attendanceController = new AttendanceController(attendanceView,attendanceModel);
             addItemToMainViewPane(attendanceView.getAttendanceViewPanel());
 
             //showInfoMessage(mainView.getMainViewPane(), "Attendance\nThis section is not currently functioning.");
@@ -84,8 +93,10 @@ public class MainController {
     }
     class ReportButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            RegistrationView registrationView = new RegistrationView();
-            addItemToMainViewPane(registrationView.getRegistrationViewPanel());
+            ReportView reportView = new ReportView();
+            ReportModel reportModel = new ReportModel();
+            ReportController reportController = new ReportController();
+            addItemToMainViewPane(reportView.getReportViewPanel());
 
             //showInfoMessage(mainView.getMainViewPane(), "Report\nThis section is not currently functioning.");
         }

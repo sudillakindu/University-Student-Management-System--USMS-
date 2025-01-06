@@ -95,6 +95,11 @@ public class LoginAndSignUpController {
                 return;
             }
 
+            if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
+                showErrorMessage(loginAndSignUpView.getSignUpPane(), "Invalid email format.");
+                return;
+            }
+
             // Ask for the root password via a popup
             String rootpassword = JOptionPane.showInputDialog(
                     loginAndSignUpView.getSignUpPane(),
