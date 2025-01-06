@@ -4,6 +4,6 @@
     <file url="file://$PROJECT_DIR$/MySQL Schema/Database And Table.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/MySQL Schema/Grant Permissions.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/MySQL Schema/Logins.sql" dialect="MariaDB" />
-    <file url="file://$PROJECT_DIR$/MySQL Schema/Sample Data.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/MySQL Schema/Sample Data.sql" dialect="MariaDB" />
   </component>
 </project>
